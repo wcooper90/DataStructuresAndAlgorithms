@@ -16,7 +16,7 @@ int rfibonacci (int n) {
     return 1;
   }
   else {
-    return rfibonacci(n-1) + rfibonacci(n-2);
+    return rfibonacci(n-1) % 65536 + rfibonacci(n-2) % 65536;
   }
 }
 
@@ -49,7 +49,7 @@ int** matrixMultiplier (int a[2][2], int b[2][2]){
           c[i][j] = 0;
           for (int k = 0; k < sizeOfSquareMatrix; k++)
           {
-              c[i][j] += a[i][k] * b[k][j];
+              c[i][j] += (a[i][k] * b[k][j]) % 65536;
           }
       }
   }
@@ -80,27 +80,25 @@ int mfibonacci (int n) {
 int main(){
 
     auto start = high_resolution_clock::now();
-    int num = rfibonacci(40);
+    int num = rfibonacci(1);
     auto stop = high_resolution_clock::now();
     auto duration = duration_cast<microseconds>(stop - start);
     cout << "recursive: " + std::to_string(num) << endl;
     cout << std::to_string(duration.count()) + " microseconds" << endl;
 
     start = high_resolution_clock::now();
-    num = ifibonacci(60);
+    num = ifibonacci(1000000000);
     stop = high_resolution_clock::now();
     duration = duration_cast<microseconds>(stop - start);
     cout << "iterative: " + std::to_string(num) << endl;
     cout << std::to_string(duration.count()) + " microseconds" << endl;
 
     start = high_resolution_clock::now();
-    num = mfibonacci(60);
+    num = mfibonacci(1000);
     stop = high_resolution_clock::now();
     duration = duration_cast<microseconds>(stop - start);
     cout << "matrix: " + std::to_string(num) << endl;
     cout << std::to_string(duration.count()) + " microseconds" << endl;
-
-
 
 
     return 0;
